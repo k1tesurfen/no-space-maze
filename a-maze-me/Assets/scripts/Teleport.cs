@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour
 {
-public GameObject currentMaze;
+public GameObject nextMaze;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +19,7 @@ public GameObject currentMaze;
     }
 
     void OnTriggerEnter(Collider other){
-        currentMaze.transform.Rotate(0,-90,0, Space.World);
+        nextMaze.SetActive(true);
+        gameObject.transform.parent.gameObject.SetActive(false);
     }
 }
