@@ -238,6 +238,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laser: {fileID: 7800199544247338775, guid: ef0726ad072474c83acb7db18184bc8a, type: 3}
   player: {fileID: 366529443}
+  mask:
+    serializedVersion: 2
+    m_Bits: 1024
   normal: {fileID: 2100000, guid: 2236c76bb8c414611a8ae79a3d078968, type: 2}
   damaged: {fileID: 2100000, guid: 41d70a8f0c6dc442a9ebae821178a4af, type: 2}
   timer: 0
