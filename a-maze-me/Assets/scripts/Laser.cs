@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
+    public GameObject gameManager;
     //position where the laser will start.
     public Vector3 startPosition;
 
@@ -22,6 +23,10 @@ public class Laser : MonoBehaviour
     //Endpoint of the laserbeam
     private Vector3 laserEnd;
     LineRenderer lr;
+
+    public LayerMask playerMask;
+    RaycastHit playerHit;
+    bool playerNotYetHit = true;
     bool laserCreated = false;
     // Start is called before the first frame update
     void Start()
@@ -55,16 +60,31 @@ public class Laser : MonoBehaviour
 
             //decrease distance, which the laser is allowed to travel
             travelDistance -= movingSpeed;
+            if (Physics.Raycast((gameObject.transform.position + 4 * (laserStart - laserEnd).normalized),
+                laserEnd - laserStart, out playerHit, 12f, playerMask))
+            {
+                if (playerNotYetHit)
+                {
+                    Debug.Log("player takes 10 damage");
+                    playerNotYetHit = false;
+                }
+                gameManager.GetComponent<GameManager>().PlayerDamage();
+            }
+            else
+            {
+                gameManager.GetComponent<GameManager>().PlayerNormal();
+            }
         }
     }
-    public void StartLaser(Vector3 start, float distance, Vector3 direction, float speed)
+    public void StartLaser(Vector3 start, float distance, Vector3 direction, float speed, GameObject gameManager, LayerMask playerMask)
     {
         //set the global variables of this gameobject
         this.startPosition = start;
         this.movingDirection = direction;
         this.movingSpeed = speed;
         this.travelDistance = distance;
-
+        this.gameManager = gameManager;
+        this.playerMask = playerMask;
         //get the line renderer component of this gameobject
         lr = gameObject.GetComponent<LineRenderer>();
 
